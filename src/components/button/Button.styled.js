@@ -1,3 +1,4 @@
+// * Styled Components * //
 import styled from 'styled-components';
 import { baseWidth, sizes } from '../UI/variables';
 
@@ -14,12 +15,12 @@ export const Btn = styled.button`
 
   border: none;
   cursor: pointer;
-  box-shadow: 5px 5px 5px black;
+  box-shadow: 3px 3px 3px black;
   outline: none;
   text-decoration: none;
 
   :active {
-    box-shadow: 2px 2px 2px black;
+    box-shadow: 1px 1px 1px black;
     transform: translateY(4px);
     outline: none;
     text-decoration: none;
