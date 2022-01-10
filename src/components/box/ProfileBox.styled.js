@@ -1,17 +1,19 @@
 // * Styled Components * //
 import styled from 'styled-components';
+// * Base Variables * //
 import { baseWidth, sizes } from '../UI/variables';
 
-export const Ipt = styled.input`
-  width: ${(props) => props.width};
-  /* width: 100%; */
-  margin: ${(props) => props.margin};
-  height: ${(props) => props.height};
-  padding: ${(props) => props.padding};
-  font-size: ${(props) => props.size};
-  border-radius: ${(props) => props.radius};
+export const PrfBox = styled.div`
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
 
-  border: none;
+  margin: 0 auto;
+  /* border-radius: 5%; */
+  padding: 5px 0px;
+  width: 100%;
+  background: #43249f;
 
   /* Min 1920px */
   @media (min-width: ${baseWidth.lg}) {
@@ -24,7 +26,7 @@ export const Ipt = styled.input`
   }
   /* Max 500px */
   @media (max-width: ${baseWidth.sm}) {
-    width: 80%;
-    height: 30px;
+    /* width: 80%; */
+    width: 100%;
   }
 `;
