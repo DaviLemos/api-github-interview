@@ -7,48 +7,25 @@ const Input = ({
   size,
   padding,
   width,
+  height,
   margin,
   radius,
   onChange,
   onBlur,
+  border,
 }) => {
-  switch (size) {
-    case 'x-large':
-      padding = '10px 25px';
-      width = '200px';
-      size = '20px';
-      break;
-    case 'large':
-      padding = '10px 20px';
-      width = '150px';
-      size = '18px';
-      break;
-    case 'medium':
-      padding = '10px 15px';
-      width = '125px';
-      size = '16px';
-      break;
-    case 'small':
-      padding = '10px';
-      width = '190px';
-      size = '14px';
-      break;
-    default:
-      padding = '0';
-      width = '150px';
-      size = '12px';
-      break;
-  }
   return (
     <Ipt
       onChange={onChange}
       size={size}
       padding={padding}
       width={width}
+      height={height}
       margin={margin}
       radius={radius}
       placeholder={text}
       onBlur={onBlur}
+      border={border}
     />
   );
 };
