@@ -12,4 +12,9 @@ export const FlxBox = styled.div`
   border-radius: ${({ borderRadius }) => borderRadius};
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
+
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
+
+  cursor: ${({ cursor }) => cursor};
 `;

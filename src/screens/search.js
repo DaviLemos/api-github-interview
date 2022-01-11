@@ -14,6 +14,7 @@ import { List, Item } from '../components/list/List';
 import { userProfile, repository, starred } from '../api/API';
 
 const Search = () => {
+  const [user, setUser] = useState('');
   const [gitUser, setGitUser] = useState();
   const [gitRepository, setGitRepository] = useState();
   const [gitStarred, setGitStarred] = useState();
@@ -81,6 +82,16 @@ const Search = () => {
     }
   };
 
+  const logout = () => {
+    window.open('http://localhost:5000/auth/logout', '_self');
+    localStorage.removeItem('user');
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUser(user);
+  }, []);
+
   return (
     <div>
       <FlexBox
@@ -90,6 +101,24 @@ const Search = () => {
         background="#777"
         padding="10px 0"
       >
+        <FlexBox justify="center" align="center">
+          <Avatar
+            width="60px"
+            height="60px"
+            margin="20px auto"
+            alt="Github User Avatar"
+            url={user.avatar}
+          />
+          <H2 margin="0 10px" color="white">
+            {user.name}
+          </H2>{' '}
+          <Logo
+            onClick={logout}
+            src="https://img.icons8.com/color/48/000000/in-app-messaging.png"
+            alt="Logout"
+          />
+        </FlexBox>
+
         <H1 margin="10px 0 0" color="white">
           {' '}
           Git Profile Search{' '}
