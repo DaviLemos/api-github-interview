@@ -1,7 +1,14 @@
+// * React * //
 import React from 'react';
+// * Avatar * //
 import { Img } from './Avatar.styled';
-import PropTypes from 'prop-types';
+// * Logo * //
+import { LG } from './Logo.styled';
 
-export const Avatar = ({ url }) => {
-  return <Img src={url} />;
+export const Avatar = ({ url, margin, width, height }) => {
+  return <Img src={url} margin={margin} width={width} height={height} />;
+};
+
+export const Logo = ({ src, width, height, alt }) => {
+  return <LG src={src} width={width} height={height} alt={alt} />;
 };
