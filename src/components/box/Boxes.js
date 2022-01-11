@@ -13,6 +13,10 @@ export const FlexBox = ({
   borderRadius,
   margin,
   padding,
+  width,
+  height,
+  cursor,
+  onClick,
 }) => {
   return (
     <FlxBox
@@ -24,6 +28,10 @@ export const FlexBox = ({
       borderRadius={borderRadius}
       margin={margin}
       padding={padding}
+      width={width}
+      height={height}
+      cursor={cursor}
+      onClick={onClick}
     >
       {children}
     </FlxBox>

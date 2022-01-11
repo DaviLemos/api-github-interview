@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 export const Th1 = styled.h1`
   font-weight: bold;
-  font-size: 32px;
+  font-size: 30px;
 
   color: ${({ color }) => color};
   margin: ${({ margin }) => margin};
 `;
 
 export const Th2 = styled.h2`
-  font-size: 28px;
+  font-size: 26px;
 
   color: ${({ color }) => color};
   margin: ${({ margin }) => margin};
