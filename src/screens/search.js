@@ -25,6 +25,21 @@ const Search = () => {
     setGitUser(e.target.value);
   };
 
+  const checkUser = (userData, key) => {
+    let usersStorage = JSON.parse(localStorage.getItem('users'));
+    if (
+      !usersStorage ||
+      !Object.keys(usersStorage).includes(gitUser) ||
+      !Object.keys(usersStorage[gitUser]).includes(key)
+    ) {
+      !usersStorage && (usersStorage = {});
+      !usersStorage[gitUser] && (usersStorage[gitUser] = {});
+      usersStorage[gitUser][key] = userData;
+      localStorage.setItem('users', JSON.stringify(usersStorage));
+    }
+    return usersStorage[gitUser][key];
+  };
+
   const handleSearch = () => {
     if (gitUser) {
       userProfile(gitUser)
@@ -39,7 +54,11 @@ const Search = () => {
             following: res.following,
             url: res.html_url,
           };
-          setGitUserProfile(user);
+
+          let profile = checkUser(user, 'profile');
+          setGitUserProfile(profile);
+          setGitRepository();
+          setGitStarred();
         })
         .catch(function (err) {
           console.log('Error');
@@ -56,7 +75,8 @@ const Search = () => {
             return { id: data.id, name: data.name, url: data.html_url };
           });
           setChange(true);
-          setGitRepository(repos);
+          let repository = checkUser(repos, 'repos');
+          setGitRepository(repository);
         })
         .catch(function (err) {
           console.log('Error');
@@ -73,7 +93,8 @@ const Search = () => {
             return { id: data.id, name: data.name, url: data.html_url };
           });
           setChange(false);
-          setGitStarred(repos);
+          let starred = checkUser(repos, 'starred');
+          setGitStarred(starred);
         })
         .catch(function (err) {
           console.log('Error');

@@ -1,7 +1,5 @@
 // * React * //
 import React, { useEffect, useState } from 'react';
-// * Router * //
-import { useNavigate } from 'react-router-dom';
 // * Components * //
 import Button from '../components/button/Button';
 import Input from '../components/input/Input';
@@ -12,8 +10,6 @@ import { H1, H2, H3, P } from '../components/typography/Typography';
 import { FlexBox } from '../components/box/Boxes';
 
 const Login = ({}) => {
-  const navigate = useNavigate();
-
   const github = () => {
     window.open('http://localhost:5000/auth/github', '_self');
   };
