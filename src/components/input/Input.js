@@ -15,6 +15,7 @@ const Input = ({
   onChange,
   onBlur,
   border,
+  testid,
 }) => {
   return (
     <Ipt
@@ -30,6 +31,7 @@ const Input = ({
       placeholder={text}
       onBlur={onBlur}
       border={border}
+      data-testid={testid}
     />
   );
 };

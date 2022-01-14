@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 const FlexBox = ({
   children,
-  direction = 'row',
-  align = 'normal',
-  justify = 'start',
-  background = 'transparent',
+  direction,
+  align,
+  justify,
+  background,
   border,
   borderRadius,
   margin,
@@ -19,6 +19,7 @@ const FlexBox = ({
   cursor,
   onClick,
   position,
+  testid,
 }) => {
   return (
     <FlxBox
@@ -35,6 +36,7 @@ const FlexBox = ({
       cursor={cursor}
       onClick={onClick}
       position={position}
+      data-testid={testid}
     >
       {children}
     </FlxBox>

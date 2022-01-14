@@ -200,7 +200,7 @@ const Search = () => {
   }, []);
 
   return (
-    <FlexBox height="100vh" direction="column">
+    <FlexBox height="100vh" direction="column" testid="search-screen">
       <FlexBox
         direction="column"
         align="center"
@@ -210,7 +210,7 @@ const Search = () => {
         height={loading || gitUserProfile !== undefined ? '' : '100vh'}
       >
         {user ? (
-          <FlexBox justify="center" align="center">
+          <FlexBox justify="center" align="center" testid="search-header">
             <Image
               borderRadius="30px"
               width="60px"
@@ -218,6 +218,8 @@ const Search = () => {
               margin="20px auto"
               alt="Github User Avatar"
               src={user.avatar}
+              rotate={false ? true : false}
+              testid="header-avatar"
             />
             <H2 margin="0 10px" color="white">
               {user.name}
@@ -229,6 +231,8 @@ const Search = () => {
               src="https://img.icons8.com/color/48/000000/in-app-messaging.png"
               alt="Logout"
               cursor="pointer"
+              rotate={false ? true : false}
+              testid="logout-icon"
             />
           </FlexBox>
         ) : (
@@ -236,7 +240,7 @@ const Search = () => {
             src="https://img.icons8.com/material-outlined/24/000000/loading-sign.png"
             width="30px"
             height="30px"
-            rotate={true}
+            rotate={true ? true : false}
           />
         )}
 
@@ -255,6 +259,7 @@ const Search = () => {
           padding="10px 15px"
           onChange={handleInput}
           onBlur={handleSearch}
+          testid="search-input"
         />
 
         <FlexBox align="center" justify="center">
@@ -268,6 +273,7 @@ const Search = () => {
             margin="10px"
             radius="10px"
             onClick={handleRepository}
+            testid="repository-button"
           />
           <Button
             background="#ff8a65"
@@ -279,6 +285,7 @@ const Search = () => {
             margin="10px"
             radius="10px"
             onClick={handleStarred}
+            testid="starred-button"
           />
         </FlexBox>
       </FlexBox>
@@ -292,6 +299,7 @@ const Search = () => {
             margin="20px auto"
             src={gitUserProfile.avatar}
             alt="Github User Avatar"
+            rotate={false ? true : false}
           />
           {update && (
             <Button
@@ -315,6 +323,7 @@ const Search = () => {
                 src="https://github.com/fluidicon.png"
                 alt="Logo Github"
                 cursor="pointer"
+                rotate={false ? true : false}
               />
             </a>
           </H2>
@@ -340,7 +349,7 @@ const Search = () => {
             src="https://img.icons8.com/material-outlined/24/000000/loading-sign.png"
             width="30px"
             height="30px"
-            rotate={true}
+            rotate={true ? true : false}
           />
         </FlexBox>
       )}
@@ -367,6 +376,7 @@ const Search = () => {
                               src="https://github.com/fluidicon.png"
                               alt="Logo Github"
                               cursor="pointer"
+                              rotate={false ? true : false}
                             />
                           </a>
                           <P margin="2px 0 3px 2px"> {repos.name} </P>
@@ -403,6 +413,7 @@ const Search = () => {
                               src="https://github.com/fluidicon.png"
                               alt="Logo Github"
                               cursor="pointer"
+                              rotate={false ? true : false}
                             />
                           </a>
                           <P margin="2px 0 3px 2px"> {repos.name} </P>

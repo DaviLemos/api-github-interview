@@ -16,6 +16,7 @@ const Image = ({
   cursor,
   rotate,
   borderRadius,
+  testid,
 }) => {
   return (
     <Img
@@ -30,6 +31,7 @@ const Image = ({
       cursor={cursor}
       onClick={onClick}
       rotate={rotate}
+      data-testid={testid}
     />
   );
 };

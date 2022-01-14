@@ -13,6 +13,7 @@ const Button = ({
   color,
   background,
   radius,
+  testid,
 }) => {
   return (
     <Btn
@@ -25,6 +26,7 @@ const Button = ({
       width={width}
       margin={margin}
       radius={radius}
+      data-testid={testid}
     >
       {text}
     </Btn>
