@@ -41,11 +41,13 @@ Button.propTypes = {
   color: PropTypes.string,
   background: PropTypes.string,
   radius: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
   type: 'button',
   size: '',
+  width: '200px',
 };
 
 export default Button;

@@ -1,5 +1,5 @@
 // * React * //
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // * GlobalStyle * //
 import { GlobalStyle } from './assets/GlobalStyle';
 // * Router * //

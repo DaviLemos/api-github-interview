@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 // * Components * //
 import Button from '../components/button/Button';
 import Input from '../components/input/Input';
-import { Avatar, Logo } from '../components/image/Images';
+import Image from '../components/image/Image';
 // * Typography * //
 import { H1, H2, H3, P } from '../components/typography/Typography';
 // * Boxes * //
-import { FlexBox } from '../components/box/Boxes';
+import FlexBox from '../components/box/Box';
 // * List * //
 import { List, Item } from '../components/list/List';
 // * Axios Functions * //
@@ -20,13 +20,29 @@ const Search = () => {
   const [gitStarred, setGitStarred] = useState();
   const [gitUserProfile, setGitUserProfile] = useState();
   const [change, setChange] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [updateData, setUpdateData] = useState({
+    profile: '',
+    repos: '',
+    starred: '',
+  });
 
-  const handleInput = (e) => {
-    setGitUser(e.target.value);
+  const getLocalStorageUser = (key, setState) => {
+    let usersStorage = JSON.parse(localStorage.getItem('gitusers'));
+
+    if (
+      usersStorage &&
+      Object.keys(usersStorage).includes(gitUser) &&
+      Object.keys(usersStorage[gitUser]).includes(key)
+    ) {
+      setState(usersStorage[gitUser][key]);
+      return usersStorage[gitUser][key];
+    }
   };
 
-  const checkUser = (userData, key) => {
-    let usersStorage = JSON.parse(localStorage.getItem('users'));
+  const setLocalStorageUser = (userData, key) => {
+    let usersStorage = JSON.parse(localStorage.getItem('gitusers'));
     if (
       !usersStorage ||
       !Object.keys(usersStorage).includes(gitUser) ||
@@ -35,13 +51,50 @@ const Search = () => {
       !usersStorage && (usersStorage = {});
       !usersStorage[gitUser] && (usersStorage[gitUser] = {});
       usersStorage[gitUser][key] = userData;
-      localStorage.setItem('users', JSON.stringify(usersStorage));
+      localStorage.setItem('gitusers', JSON.stringify(usersStorage));
     }
     return usersStorage[gitUser][key];
   };
 
+  const compareData = (localData, apiData) => {
+    console.log(JSON.stringify(localData) === JSON.stringify(apiData));
+    return JSON.stringify(localData) === JSON.stringify(apiData);
+  };
+
+  const updateLocalData = () => {
+    console.log(updateData);
+    setUpdate(false);
+
+    let user = JSON.parse(localStorage.getItem('gitusers'));
+
+    if (updateData.profile) {
+      setGitUserProfile(updateData.profile);
+      user[gitUser].profile = updateData.profile;
+    }
+    if (updateData.repos) {
+      setGitRepository(updateData.repos);
+      user[gitUser].repos = updateData.repos;
+    }
+    if (updateData.starred) {
+      setGitStarred(updateData.starred);
+      user[gitUser].starred = updateData.starred;
+    }
+    localStorage.setItem('gitusers', JSON.stringify(user));
+    setUpdateData({ ...updateData, profile: '', repos: '', starred: '' });
+  };
+
+  const handleInput = (e) => {
+    setGitUser(e.target.value);
+  };
+
   const handleSearch = () => {
     if (gitUser) {
+      setLoading(true);
+      setGitUserProfile();
+      setGitRepository();
+      setGitStarred();
+      let profile = getLocalStorageUser('profile', setGitUserProfile);
+      profile && setLoading(false);
       userProfile(gitUser)
         .then(function (res) {
           const user = {
@@ -54,29 +107,51 @@ const Search = () => {
             following: res.following,
             url: res.html_url,
           };
-
-          let profile = checkUser(user, 'profile');
-          setGitUserProfile(profile);
+          if (!profile) {
+            profile = setLocalStorageUser(user, 'profile');
+            setGitUserProfile(profile);
+          } else {
+            if (!compareData(profile, user)) {
+              setUpdate(true);
+              setUpdateData({ ...updateData, profile: user });
+            }
+          }
+          // ;
           setGitRepository();
           setGitStarred();
+          setLoading(false);
         })
         .catch(function (err) {
           console.log('Error');
           console.log(err);
+          setLoading(false);
+          setGitUserProfile('');
         });
     }
   };
 
   const handleRepository = () => {
     if (gitUser) {
+      setLoading(true);
+      setChange(true);
+      let repositories = getLocalStorageUser('repos', setGitRepository);
+      repositories && setLoading(false);
       repository(gitUser)
         .then(function (res) {
           const repos = res.map((data) => {
             return { id: data.id, name: data.name, url: data.html_url };
           });
-          setChange(true);
-          let repository = checkUser(repos, 'repos');
-          setGitRepository(repository);
+          if (!repositories) {
+            repositories = setLocalStorageUser(repos, 'repos');
+            setGitRepository(repositories);
+          } else {
+            if (!compareData(repositories, repos)) {
+              setUpdate(true);
+              setUpdateData({ ...updateData, repos: repos });
+            }
+          }
+          // setGitStarred();
+          setLoading(false);
         })
         .catch(function (err) {
           console.log('Error');
@@ -87,14 +162,25 @@ const Search = () => {
 
   const handleStarred = () => {
     if (gitUser) {
+      setLoading(true);
+      setChange(false);
+      let star = getLocalStorageUser('starred', setGitStarred);
+      star && setLoading(false);
       starred(gitUser)
         .then(function (res) {
           const repos = res.map((data) => {
             return { id: data.id, name: data.name, url: data.html_url };
           });
-          setChange(false);
-          let starred = checkUser(repos, 'starred');
-          setGitStarred(starred);
+          if (!star) {
+            star = setLocalStorageUser(repos, 'starred');
+            setGitStarred(star);
+          } else {
+            if (!compareData(star, repos)) {
+              setUpdate(true);
+              setUpdateData({ ...updateData, starred: repos });
+            }
+          }
+          setLoading(false);
         })
         .catch(function (err) {
           console.log('Error');
@@ -114,31 +200,45 @@ const Search = () => {
   }, []);
 
   return (
-    <div>
+    <FlexBox height="100vh" direction="column">
       <FlexBox
         direction="column"
         align="center"
         justify="center"
         background="#777"
         padding="10px 0"
+        height={loading || gitUserProfile !== undefined ? '' : '100vh'}
       >
-        <FlexBox justify="center" align="center">
-          <Avatar
-            width="60px"
-            height="60px"
-            margin="20px auto"
-            alt="Github User Avatar"
-            url={user.avatar}
+        {user ? (
+          <FlexBox justify="center" align="center">
+            <Image
+              borderRadius="30px"
+              width="60px"
+              height="60px"
+              margin="20px auto"
+              alt="Github User Avatar"
+              src={user.avatar}
+            />
+            <H2 margin="0 10px" color="white">
+              {user.name}
+            </H2>{' '}
+            <Image
+              width="50px"
+              height="50px"
+              onClick={logout}
+              src="https://img.icons8.com/color/48/000000/in-app-messaging.png"
+              alt="Logout"
+              cursor="pointer"
+            />
+          </FlexBox>
+        ) : (
+          <Image
+            src="https://img.icons8.com/material-outlined/24/000000/loading-sign.png"
+            width="30px"
+            height="30px"
+            rotate={true}
           />
-          <H2 margin="0 10px" color="white">
-            {user.name}
-          </H2>{' '}
-          <Logo
-            onClick={logout}
-            src="https://img.icons8.com/color/48/000000/in-app-messaging.png"
-            alt="Logout"
-          />
-        </FlexBox>
+        )}
 
         <H1 margin="10px 0 0" color="white">
           {' '}
@@ -156,9 +256,10 @@ const Search = () => {
           onChange={handleInput}
           onBlur={handleSearch}
         />
+
         <FlexBox align="center" justify="center">
           <Button
-            background="#FF7A00"
+            background="#ff8a65"
             color="white"
             text="Repository"
             padding="10px 20px"
@@ -169,7 +270,7 @@ const Search = () => {
             onClick={handleRepository}
           />
           <Button
-            background="#FF7A00"
+            background="#ff8a65"
             color="white"
             text="Starred"
             padding="10px 20px"
@@ -181,23 +282,39 @@ const Search = () => {
           />
         </FlexBox>
       </FlexBox>
-      {gitUserProfile && (
+
+      {gitUserProfile ? (
         <FlexBox direction="column" align="center" margin="0 0 10px">
-          <Avatar
+          <Image
+            borderRadius="50%"
             width="120px"
             height="120px"
             margin="20px auto"
-            url={gitUserProfile.avatar}
+            src={gitUserProfile.avatar}
             alt="Github User Avatar"
           />
+          {update && (
+            <Button
+              background="#00ccff"
+              color="white"
+              text="Update Data"
+              padding="10px 20px"
+              width="150px"
+              size="16px"
+              margin="0px 0px 20px"
+              radius="10px"
+              onClick={updateLocalData}
+            />
+          )}
           <H2>
             {gitUserProfile.name}{' '}
             <a href={gitUserProfile.url} target="_blank">
-              <Logo
+              <Image
                 width="20px"
                 height="20px"
                 src="https://github.com/fluidicon.png"
                 alt="Logo Github"
+                cursor="pointer"
               />
             </a>
           </H2>
@@ -208,6 +325,23 @@ const Search = () => {
 
             <P margin="0 6px">{gitUserProfile.following} Following</P>
           </FlexBox>
+        </FlexBox>
+      ) : (
+        gitUserProfile === '' && (
+          <FlexBox align="center" justify="center" margin="20px 0 0">
+            <H2>User not Found</H2>
+          </FlexBox>
+        )
+      )}
+
+      {loading && (
+        <FlexBox justify="center" align="center" margin="10px">
+          <Image
+            src="https://img.icons8.com/material-outlined/24/000000/loading-sign.png"
+            width="30px"
+            height="30px"
+            rotate={true}
+          />
         </FlexBox>
       )}
 
@@ -227,11 +361,12 @@ const Search = () => {
                       <Item key={repos.id}>
                         <FlexBox align="center">
                           <a href={repos.url} target="_blank">
-                            <Logo
+                            <Image
                               width="20px"
                               height="20px"
                               src="https://github.com/fluidicon.png"
                               alt="Logo Github"
+                              cursor="pointer"
                             />
                           </a>
                           <P margin="2px 0 3px 2px"> {repos.name} </P>
@@ -262,11 +397,12 @@ const Search = () => {
                       <Item key={repos.id}>
                         <FlexBox align="center">
                           <a href={repos.url} target="_blank">
-                            <Logo
+                            <Image
                               width="20px"
                               height="20px"
                               src="https://github.com/fluidicon.png"
                               alt="Logo Github"
+                              cursor="pointer"
                             />
                           </a>
                           <P margin="2px 0 3px 2px"> {repos.name} </P>
@@ -282,7 +418,7 @@ const Search = () => {
               </div>
             </FlexBox>
           )}
-    </div>
+    </FlexBox>
   );
 };
 
