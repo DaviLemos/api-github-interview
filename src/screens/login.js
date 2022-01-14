@@ -1,13 +1,11 @@
 // * React * //
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // * Components * //
-import Button from '../components/button/Button';
-import Input from '../components/input/Input';
-import { Avatar, Logo } from '../components/image/Images';
+import Image from '../components/image/Image';
 // * Typography * //
-import { H1, H2, H3, P } from '../components/typography/Typography';
+import { H1 } from '../components/typography/Typography';
 // * Boxes * //
-import { FlexBox } from '../components/box/Boxes';
+import FlexBox from '../components/box/Box';
 
 const Login = ({}) => {
   const github = () => {
@@ -37,7 +35,12 @@ const Login = ({}) => {
         <H1 color="white" margin="0 5px 0 0">
           Login
         </H1>
-        <Logo width="80px" src="https://github.com/fluidicon.png" alt="" />
+        <Image
+          width="60px"
+          height="60px"
+          src="https://github.com/fluidicon.png"
+          alt=""
+        />
       </FlexBox>
     </FlexBox>
   );

@@ -17,4 +17,5 @@ export const FlxBox = styled.div`
   width: ${({ width }) => width};
 
   cursor: ${({ cursor }) => cursor};
+  position: ${({ position }) => position};
 `;
