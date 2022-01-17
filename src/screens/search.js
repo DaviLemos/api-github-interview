@@ -293,6 +293,7 @@ const Search = () => {
       {gitUserProfile ? (
         <FlexBox direction="column" align="center" margin="0 0 10px">
           <Image
+            testid="git-profile-image"
             borderRadius="50%"
             width="120px"
             height="120px"
@@ -361,6 +362,7 @@ const Search = () => {
               align="center"
               border="2px solid #231024"
               borderRadius="10px"
+              testid="repository-list"
             >
               <H3 margin="20px 0 10px">Repositories</H3>
               <div style={{ width: '95%' }}>
@@ -398,6 +400,7 @@ const Search = () => {
               align="center"
               border="2px solid #231024"
               borderRadius="10px"
+              testid="starred-list"
             >
               <H3 margin="20px 0 10px">Starreds</H3>
               <div style={{ width: '95%' }}>
