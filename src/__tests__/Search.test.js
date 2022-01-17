@@ -45,7 +45,11 @@ describe('Search Component', () => {
         const handleClick = jest.fn();
         render(<Button onClick={handleClick} text="Repository" />);
 
-        fireEvent.click(screen.getByText(/repository/i));
+        const button = screen.getByRole('button', {
+          name: 'Repository',
+        });
+
+        userEvent.click(button);
         expect(handleClick).toHaveBeenCalledTimes(1);
       });
     });

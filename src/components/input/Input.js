@@ -16,9 +16,11 @@ const Input = ({
   onBlur,
   border,
   testid,
+  onKeyUp,
 }) => {
   return (
     <Ipt
+      onKeyUp={onKeyUp}
       background={background}
       color={color}
       onChange={onChange}
