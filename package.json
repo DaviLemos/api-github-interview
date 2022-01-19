@@ -1,6 +1,14 @@
 {
   "name": "git-auth",
   "version": "0.1.0",
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/stories",
+      "src/assets",
+      "index.js",
+      "App.js"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
