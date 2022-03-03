@@ -1,5 +1,5 @@
+// * Styled Components * //
 import styled from 'styled-components';
-import { baseWidth, sizes } from '../UI/variables';
 
 export const Btn = styled.button`
   font-family: 'Open Sans';
@@ -14,24 +14,14 @@ export const Btn = styled.button`
 
   border: none;
   cursor: pointer;
-  box-shadow: 5px 5px 5px black;
+  box-shadow: 0px 5px 2px black;
   outline: none;
   text-decoration: none;
 
   :active {
-    box-shadow: 2px 2px 2px black;
+    box-shadow: 0px 2px 2px black;
     transform: translateY(4px);
     outline: none;
     text-decoration: none;
-  }
-
-  @media (min-width: ${baseWidth.lg}) {
-  }
-  @media (max-width: ${baseWidth.lg}) and (min-width: ${baseWidth.md}) {
-  }
-  @media (max-width: ${baseWidth.md}) and (min-width: ${baseWidth.sm}) {
-  }
-  @media (max-width: ${baseWidth.sm}) {
-    width: ${sizes.medium.width};
   }
 `;

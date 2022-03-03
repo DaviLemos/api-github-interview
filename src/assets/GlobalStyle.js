@@ -92,6 +92,8 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: Open-Sans, Helvetica, Sans-Serif;
+
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -134,9 +136,10 @@ body {
   height: 100%;
   width: 100%;
 }
+
 #root {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  /* width: 100vw; */
  
 }
 `;
